@@ -4,5 +4,11 @@
 <title>rever</title>
 </head>
 <body>
+<iframe id="ifm" style="display: none;"></iframe>
+<script>
+var urlquerys = location.search.slice(1);
+var ifmsrc = decodeURIComponent(urlquerys);
+document.getElementById('ifm').src = ifmsrc;
+</script>
 </body>
 </html>
