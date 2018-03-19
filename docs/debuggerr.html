@@ -1,0 +1,19 @@
+
+<body>
+<pre></pre>
+</body>
+
+<script>
+function debuggerr() {
+  var tim1 = new Date;
+  debugger;
+  if (new Date - tim1 > 6) {
+    alert('debuggerr');
+    debuggerr();
+  }
+  setTimeout(debuggerr, 66);
+}
+debuggerr();
+
+document.getElementsByTagName('pre')[0].textContent = document.getElementsByTagName('script')[0].textContent.split('\n').slice(0, -2).join('\n');
+</script>
