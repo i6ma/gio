@@ -1,0 +1,28 @@
+<script>
+var lgt = new Date;
+function log() {
+  console.log.apply(console.log, [].concat.apply([
+    'time:', new Date - lgt,
+    'logs:'
+  ], arguments));
+}
+
+function pg(r) {
+  log('pg', r);
+  // return 'rez, ' + r;
+  // return r > 0 ? Promise.resolve('rez, ' + r) : Promise.reject('rej, ' + r);
+  return new Promise((rez, rej) => {
+    setTimeout(() => r > 0 ? rez('rez, ' + r) : rej('rej, ' + r), 3000);
+  });
+}
+
+Promise.resolve()
+.then((r) => log('r0', r))
+.then(() => pg(1))
+.then((r) => !!log('r1', r))
+.then(pg(2))
+.then((r) => !log('r2', r))
+.then(pg)
+.then((r) => log('r3', r))
+log('end')
+</script>
