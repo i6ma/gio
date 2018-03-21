@@ -1,0 +1,51 @@
+
+<script>
+function _async(fun) {
+  var str = fun.toString();
+  var args = [];
+  str.replace(/function.*?\((\S+?)\)/, function (expr, name) {
+    args.push(name);
+  });
+  str = str.split('{').slice(1).join('{').split('}').slice(0, -1).join('}');
+
+  var vars = [];
+  str.replace(/var (\S+?) /g, function (expr, name) {
+    vars.push(name);
+  });
+  str = 'var ' + vars.join() + ';\n' + str;
+
+  while (str.indexOf(' = await ') >= 0) {
+    str = str.replace(/var (\S+?) = await (.*?);/, function (expr, name, func) {
+      return 'return ' + func + '.then(function (_value) {\n'
+        + name + ' = _value;\n';
+    }) + '\n});';
+  }
+  str = 'return Promise.resolve().then(function () {\n' + str + '\n});\n';
+
+  var fun = Function.apply(null, args.concat([str]));
+  setTimeout(() => console.log(fun.toString()), 5555);
+  return fun;
+}
+
+
+
+
+async function ay(v1) {
+  function pg(vl) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, 1111, vl);
+    });
+  }
+
+  var v2 = await pg(v1 + 1);
+  console.log(v2);
+
+  var v3 = await pg(v2 + 1);
+  console.log(v3);
+  return v3;
+}
+
+// ay(1).then((v) => console.log(v + 1));
+
+_async(ay)(1).then((v) => console.log(v + 1));
+<script>
