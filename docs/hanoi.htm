@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<heml>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+</head>
+<body>
+
+<style>
+.hanoi {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 300px;
+  height: 100px;
+  margin: -50px auto auto -150px;
+}
+
+.hanoi .base {
+  position: absolute;
+  width: 100%;
+  height: 20px;
+  left: 0;
+  bottom: 0;
+  background: #ddd;
+}
+.hanoi .grid {
+  position: absolute;
+  bottom: 20px;
+  width: 5px;
+  height: 100px;
+  background: #ddd;
+}
+.hanoi .grid.g0 {
+  left: 148px;
+}
+.hanoi .grid.g1 {
+  left: 48px;
+}
+.hanoi .grid.g2 {
+  left: 248px;
+}
+
+.hanoi .tower {
+  position: absolute;
+  width: 100px;
+  height: 300px;
+  bottom: -80px;
+}
+.hanoi .tower.t0 {
+  left: 100px;
+}
+.hanoi .tower.t1 {
+  left: 0px;
+}
+.hanoi .tower.t2 {
+  left: 200px;
+}
+
+.hanoi .disk {
+  position: absolute;
+  width: 100%;
+  height: 15px;
+  left: 0;
+  -webkit-transition: bottom .2s;
+  transition: bottom .2s;
+}
+.hanoi .disk:nth-child(1) {
+  bottom: 100px;
+}
+.hanoi .disk:nth-child(2) {
+  bottom: 115px;
+}
+.hanoi .disk:nth-child(3) {
+  bottom: 130px;
+}
+.hanoi .disk:nth-child(4) {
+  bottom: 145px;
+}
+.hanoi .disk:nth-child(5) {
+  bottom: 160px;
+}
+.hanoi .disk:nth-child(6) {
+  bottom: 175px;
+}
+
+.hanoi .dvo {
+  height: 13px;
+  margin: 2px auto 0 auto;
+  border-radius: 7px;
+}
+.hanoi .n00 .dvo {
+  width: 100%;
+  background: #666;
+}
+.hanoi .n01 .dvo {
+  width: 85%;
+  background: #606;
+}
+.hanoi .n02 .dvo {
+  width: 70%;
+  background: #00a;
+}
+.hanoi .n03 .dvo {
+  width: 55%;
+  background: #3a3;
+}
+.hanoi .n04 .dvo {
+  width: 40%;
+  background: #f90;
+}
+.hanoi .n05 .dvo {
+  width: 25%;
+  background: #f66;
+}
+
+.hanoi .disk.drag {
+  bottom: 210px;
+}
+</style>
+
+<div id="hanoi" class="hanoi">
+  <div class="base">
+    <div class="grid g1"></div>
+    <div class="grid g0"></div>
+    <div class="grid g2"></div>
+  </div>
+  <div class="tower t1">
+  </div>
+  <div class="tower t0">
+    <div class="disk n00"><div class="dvo"></div></div>
+    <div class="disk n01"><div class="dvo"></div></div>
+    <div class="disk n02"><div class="dvo"></div></div>
+    <div class="disk n03"><div class="dvo"></div></div>
+    <div class="disk n04"><div class="dvo"></div></div>
+    <div class="disk n05"><div class="dvo"></div></div>
+  </div>
+  <div class="tower t2">
+  </div>
+</div>
+
+<script>
+function Hanoi(opts) {
+  var self = this;
+  var $el = document.getElementById(opts.el);
+  self.$el = $el;
+  self.$t0 = $el.querySelector('.t0');
+  self.$t1 = $el.querySelector('.t1');
+  self.$t2 = $el.querySelector('.t2');
+  self.$t0.onclick = function () {
+    self.drag(self.$t0);
+  };
+  self.$t1.onclick = function () {
+    self.drag(self.$t1);
+  };
+  self.$t2.onclick = function () {
+    self.drag(self.$t2);
+  };
+}
+Hanoi.prototype.drag = function ($t) {
+  var self = this;
+  if (!self.$t) {
+    self.$t = $t;
+    var $d = self.getd();
+    if ($d) {
+      $d.className += ' drag';
+    } else {
+      self.$t = 0;
+    }
+  } else {
+    return self.drop($t);
+  }
+};
+Hanoi.prototype.drop = function ($t) {
+  var self = this;
+  var $d = self.getd();
+  if (!$d) { return; }
+  $t.appendChild($d);
+  $d.className = $d.className.replace(' drag', '');
+  self.$t = 0;
+};
+Hanoi.prototype.getd = function () {
+  var $ds = this.$t.children;
+  return $ds[$ds.length - 1];
+};
+
+new Hanoi({el: 'hanoi'});
+</script>
+
+</body>
+</html>
+
