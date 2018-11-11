@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ews</title>
+</head>
+<body>
+
+<style>
+.boxews {
+  position: fixed;
+  max-width: 100%;
+  left: 50%;
+  top: 50%;
+  white-space: pre-wrap;
+  font-family: sans-serif;
+  font-size: 50px;
+  transform: translate(-50%, -50%);
+}
+</style>
+
+<div id="boxews" class="boxews"> Touch or Click </div>
+
+<script>
+var ews = [
+  "Hello!  Hi!",
+  "Goodbye!",
+  "Good morning!",
+  "Good afternoon!",
+  "Hi! I'm Danny.",
+  "Nice to see you.",
+  "Good morning to you and to you.",
+  "Hello, Peter!\nHello, John!",
+  "Hello, Linda!\nHello, Tom!",
+  "Give me a ruler, please.\nHere you are.\nThank you.",
+  "Give me a rubber, please.\nHere you are.\nThank you.",
+  "book  ruler  pencil  rubber",
+  "Good afternoon, Kitty.\nGood afternoon, Alice.",
+  "Give me a rubber, please.\nHere you are.\nThank you.",
+  "Give me a ruler, please.\nHere you are.\nThank you.\nHow nice!",
+  "A book, a pencil, I can see.",
+  "A book, a pencil, For you and me!",
+  "A ruler, a rubber, I can see.",
+  "A ruler, a rubber, For you and me!",
+  "Hello! I'm Jack.\nHi, Jack.",
+  "This is my face.\nThis is my mouth.",
+  "face  mouth  nose  eye  ear",
+  "Eddie, touch your face.\nThis is my face.",
+  "Alice, touch your ear.\nThis is my ear.",
+  "Hi, Alice! It's you!",
+  "Look! this is your mouth.",
+  "Look! this is your eye.",
+  "Look! this is your ear.\nNo. It's not me.",
+  "This is my face.\nCan you see?\nI have big eyes.\nI have big ears.\nThey are nice.",
+  "This is my face.\nCan you see?\nI have a small mouth.\nI have a small nose.\nThey are cute.",
+  "The finger family\nDaddy finger, Daddy finger,\nWhere are you?\nHere I am. Here I am.\nHow do you do?",
+  "Mummy finger, Sister finger, Brother finger, Baby finger,",
+  "I can sing.\nI can dance.\nI can read.\nI can draw.",
+  "dance  read  sing  draw",
+  "What can you do ?",
+  "I can dance.\nI can read.",
+  "I can draw. I can draw.",
+  "I can draw a flower.",
+  "I can draw a house.",
+  "Who is she?\nWho is he?",
+  "She's my grandmother.",
+  "He's my father.",
+  "grandmother  grandfather",
+  "father  mother",
+  "This is my grandfather.\nThis is me.",
+  "Hi, Tim!\nWho is she?",
+  "Is she Kitty?\nNo.",
+  "Is she Alice?\nYes, she's Alice.",
+];
+function randews() {
+  var len = ews.length;
+  var i = Math.floor(Math.random() * len);
+  var ew = ews[i];
+  document.getElementById("boxews").innerHTML = ew;
+}
+if ("ontouchstart" in window) {
+  document.ontouchstart = randews;
+} else {
+  document.onmousedown = randews;
+}
+</script>
+</body>
+</html>
+
