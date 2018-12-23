@@ -96,7 +96,7 @@ function poster(message, origin, target) {                  // postMessage API �
 }
 
 function fixPath(path) {                                    // path 必须以 / 开头，避免与对象属性冲突
-  return ((path || '').charAt(0) === rootPath ? '' : rootPath) + path;
+  return ((path || '').charAt(0) === rootPath ? '' : rootPath) + (path || '');
 }
 
 function logWarn() {
@@ -216,7 +216,7 @@ function ppCheck(data, req) {                               // 验证 ping-pong 
 
 function setState(state, req) {                             // 连接状态切换并记录连接目标
   if (state < 0) {                                          // 连接超时或其它失败
-    mTarget = mSource;
+    mTarget.closed && (mTarget = mSource);
     mListeners = {};                                        // 清空订阅信息
     mCallbacks = {};                                        // 清空回调信息
   } else if (state > 0) {                                   // origin 验证通过后，记录目标供后续使用
@@ -229,7 +229,7 @@ function setState(state, req) {                             // 连接状态切�
       for (var i = 0; i < mStock.length; i++) {
         sendMessage.apply(sendMessage, mStock[i]);
       }
-      mStock = [];
+      mStock.length = 0;
 } } }
 
 
@@ -269,9 +269,9 @@ function destroy() {
   mSource.removeEventListener('message', msgListener);
   clearTimeout(ppTimer);
   clearTimeout(ttPing);
+  mStock.length = 0;
   stateCallback = foo;
   ppState     = -2;
-  mStock      = [];
   sListeners  = {};
   mListeners  = {};
   mCallbacks  = {};
@@ -295,6 +295,7 @@ return {
   target: setTarget,
   origin: setOrigin,
   ping: pingPong,
+  stock: mStock,
   destroy: destroy,
   version: '1.1.1'
 };
